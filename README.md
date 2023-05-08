@@ -48,3 +48,4 @@ cmd > UnityPackageCli.exe -create
 ```
 
 This will generate the packages next to the UnityPackageCli.exe.
+Now you can load up a unity project and import the package.
