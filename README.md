@@ -6,10 +6,6 @@ A simple tool to export unity packages from cli! I have no idea why unity does n
 - .NET 7
 - Python
 
-## Currently working on
-- Nested directories are currently not supported but will be soon
-
-
 ## How to use
 Create a config using
 cmd > UnityPackageCli.exe create-config
