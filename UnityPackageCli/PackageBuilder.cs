@@ -6,8 +6,6 @@ public class Packagebuilder
     private readonly UnityPackageConfigElement? _config;
 
     private List<string> _filesToInclude = new List<string>();
-
-    // Include these in the file if you want to include empty directories.
     private List<string> _directoriesToInclude = new List<string>();
 
 
@@ -58,7 +56,8 @@ public class Packagebuilder
     {
 
         // Find files.
-        _filesToInclude.AddRange(Directory.GetFiles(searchPath, "*.cs"));
+        List<string> files = Directory.GetFiles(searchPath, "*").Where(file => !file.EndsWith(".meta")).ToList();
+        _filesToInclude.AddRange(files);
 
         // Find directories.
         foreach (var dir in Directory.GetDirectories(searchPath))
@@ -90,7 +89,26 @@ public class Packagebuilder
             File.Copy(fullFilePath + ".meta", guidDirectory.FullName + "/asset.meta");
 
             // Create pathname file.
-            File.WriteAllText(guidDirectory.FullName + "/pathname", filePath);
+            File.WriteAllText(guidDirectory.FullName + "/pathname", filePath.Replace("\\", "/"));
+
+            pythonArray += "\"" + guid + "\",";
+
+        }
+
+        foreach (string directoryPath in _directoriesToInclude)
+        {
+            string basePath = Directory.GetParent(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location)).FullName;
+            basePath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+
+            string fullFilePath = basePath + "/" + directoryPath;
+            string guid = ReadGuidFromMetaFile(fullFilePath);
+            DirectoryInfo guidDirectory = Directory.CreateDirectory("packageTemp/" + guid);
+
+            // Create meta file.
+            File.Copy(fullFilePath + ".meta", guidDirectory.FullName + "/asset.meta");
+
+            // Create pathname file.
+            File.WriteAllText(guidDirectory.FullName + "/pathname", directoryPath.Replace("\\", "/"));
 
             pythonArray += "\"" + guid + "\",";
 
