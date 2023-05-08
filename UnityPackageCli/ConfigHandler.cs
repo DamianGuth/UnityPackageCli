@@ -18,6 +18,9 @@ public static class ConfigHandler
 
         _configPath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "/" + _configPath;
 
+        if (!Directory.Exists("packagebuilderconfig"))
+            Directory.CreateDirectory("packagebuilderconfig");
+
         if (!File.Exists(_configPath))
         {
             File.WriteAllText(_configPath, JsonSerializer.Serialize(defaultConfig));
@@ -30,7 +33,7 @@ public static class ConfigHandler
 
         UnityPackageConfig config;
 
-        if (File.Exists(_configPath))
+        if (Directory.Exists("packagebuilderconfig") && File.Exists(_configPath))
         {
             _configText = File.ReadAllText(_configPath);
             
@@ -39,6 +42,9 @@ public static class ConfigHandler
         else
         {
             config = new UnityPackageConfig();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("No config found. You can create one using the 'create-config' parameter");
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         return config;
