@@ -7,6 +7,9 @@ public class Packagebuilder
 
     private List<string> _filesToInclude = new List<string>();
 
+    // Include these in the file if you want to include empty directories.
+    private List<string> _directoriesToInclude = new List<string>();
+
 
     public Packagebuilder(UnityPackageConfigElement config)
     {
@@ -47,7 +50,21 @@ public class Packagebuilder
     {
         foreach (string directory in _config.directories)
         {
-            _filesToInclude.AddRange(Directory.GetFiles(directory, "*.cs"));
+            FindPackageFilesToIncludeRekursive(directory);
+        }
+    }
+
+    private void FindPackageFilesToIncludeRekursive(string searchPath)
+    {
+
+        // Find files.
+        _filesToInclude.AddRange(Directory.GetFiles(searchPath, "*.cs"));
+
+        // Find directories.
+        foreach (var dir in Directory.GetDirectories(searchPath))
+        {
+            _directoriesToInclude.Add(dir);
+            FindPackageFilesToIncludeRekursive(dir);
         }
     }
 
