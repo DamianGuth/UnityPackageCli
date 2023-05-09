@@ -44,7 +44,7 @@ Use **outputpath** to define a **directory** to move the package to.
 After setting up the config you can use the following command:
 
 ```cmd
-cmd > UnityPackageCli.exe -create
+cmd > UnityPackageCli.exe create
 ```
 
 This will generate the packages next to the UnityPackageCli.exe.
