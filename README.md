@@ -1,5 +1,5 @@
 # Unity Package Cli
-A simple tool to export unity packages from cli! I have no idea why unity does not support this having pipelines in the back of the head but here you go.
+A simple tool to export unity packages from cli! I have no idea why unity does not support this having pipelines in mind but here you go.
 
 
 ## Requirements
@@ -47,5 +47,5 @@ After setting up the config you can use the following command:
 cmd > UnityPackageCli.exe create
 ```
 
-This will generate the packages next to the UnityPackageCli.exe.
+This will generate the packages next to the UnityPackageCli.exe (or in your custom output path).
 Now you can load up a unity project and import the package.
