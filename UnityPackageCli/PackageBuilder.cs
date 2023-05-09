@@ -177,7 +177,19 @@ tar.close()";
 
     private void MovePackageFileToOutput()
     {
-        string outputPath = _config.name.Replace(".unitypackage", "") + ".unitypackage";
+        string outputFileName = _config.name.Replace(".unitypackage", "") + ".unitypackage";
+
+        if (!Directory.Exists(_config.outputpath))
+        {
+            Directory.CreateDirectory(_config.outputpath);
+        }
+
+        string outputPath = "/" + outputFileName;
+
+        if (!String.IsNullOrEmpty(_config.outputpath.TrimEnd('/').TrimEnd('\\')))
+        {
+            outputPath = _config.outputpath.TrimEnd('/').TrimEnd('\\') + outputPath;
+        }
 
         // Delete old packages.
         if (File.Exists(outputPath))

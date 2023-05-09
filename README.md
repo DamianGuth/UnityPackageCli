@@ -38,7 +38,7 @@ Here is a basic config containing two different packages to create:
 }
 ```
 
-**outputpath** is currently not used.
+Use **outputpath** to define a **directory** to move the package to.
 
 ## Generate packages
 After setting up the config you can use the following command:
